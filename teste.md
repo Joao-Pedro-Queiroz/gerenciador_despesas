@@ -11,6 +11,7 @@ participant ServicoQuestoes
 participant LLM
 participant DBSimulado
 participant DBPlano
+%% separador necessario
 
 Actor->>Site: acessa sistema
 Site->>ServicoUsuario: cadastrar/login
