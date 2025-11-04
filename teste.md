@@ -6,38 +6,34 @@ sequenceDiagram
 
     participant Actor
     participant Site
-    participant ServUsuario as "Serviço do Usuário"
-    participant ServSimulado as "Serviço do Simulado"
-    participant ServModelo as "Serviço do Modelo"
-    participant ServQuestoes as "Serviço de Questões"
-    participant LLM as "Serviço de Terceiro LLM"
-    participant MDB_Simulado as "MongoDB Simulado"
-    participant MDB_Plano as "MongoDB Plano do Aluno"
+    participant ServicoUsuario
+    participant ServicoSimulado
+    participant ServicoModelo
+    participant ServicoQuestoes
+    participant LLM
+    participant DB_Simulado
+    participant DB_Plano
 
-    %% ====== Fluxo de Acesso e Autenticação ======
-    Actor --> Site: Acessa sistema
-    Site --> ServUsuario: Cadastrar/logar conta
-    ServUsuario ---> Site: Token JWT + Informações da conta
+    Actor ->> Site: acessa sistema
+    Site ->> ServicoUsuario: cadastrar / login
+    ServicoUsuario -->> Site: token JWT + info da conta
 
-    %% ====== Fluxo de Geração de Simulado Adaptativo ======
-    Actor --> Site: Solicita gerar simulado adaptativo
-    Site --> ServSimulado: Gerar simulado adaptativo
-    ServSimulado --> ServModelo: Envia ID conta
-    ServModelo --> LLM: Envia Prompt
-    LLM ---> ServModelo: Retorna Questões
-    ServModelo --> MDB_Plano: Salva plano do aluno
-    ServModelo ---> ServSimulado: Retorna Questões
-    ServSimulado --> MDB_Simulado: Salva novo simulado
-    ServSimulado ---> Site: Retorna Simulado
+    Actor ->> Site: gerar simulado
+    Site ->> ServicoSimulado: gerar simulado
+    ServicoSimulado ->> ServicoModelo: envia ID conta
+    ServicoModelo ->> LLM: envia prompt
+    LLM -->> ServicoModelo: retorna questoes
+    ServicoModelo ->> DB_Plano: salva plano do aluno
+    ServicoModelo -->> ServicoSimulado: retorna questoes
+    ServicoSimulado ->> DB_Simulado: salva novo simulado
+    ServicoSimulado -->> Site: retorna simulado
 
-    %% ====== Responder questões ======
-    Actor --> Site: Responde questões do simulado
+    Actor ->> Site: responder questoes
 
-    %% ====== Finalização do Simulado ======
-    Actor --> Site: Finalizar Simulado
-    Site --> ServSimulado: Finalizar Simulado
-    ServSimulado --> ServQuestoes: Enviar Questões
-    ServQuestoes --> MDB_Simulado: Atualizar questões respondidas
-    ServSimulado --> MDB_Simulado: Atualizar simulado
-    ServSimulado ---> Site: Retorna Simulado Finalizado
+    Actor ->> Site: finalizar simulado
+    Site ->> ServicoSimulado: finalizar simulado
+    ServicoSimulado ->> ServicoQuestoes: enviar questoes
+    ServicoQuestoes ->> DB_Simulado: atualizar questoes respondidas
+    ServicoSimulado ->> DB_Simulado: atualizar simulado
+    ServicoSimulado -->> Site: retorna simulado finalizado
 ```
