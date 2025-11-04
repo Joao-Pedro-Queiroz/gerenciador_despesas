@@ -6,13 +6,13 @@ sequenceDiagram
 
     participant Actor
     participant Site
-    participant ServUsuario as Serviço do Usuário
-    participant ServSimulado as Serviço do Simulado
-    participant ServModelo as Serviço do Modelo
-    participant ServQuestoes as Serviço de Questões
-    participant LLM as Serviço de Terceiro LLM
-    participant MDB_Simulado as MongoDB Simulado
-    participant MDB_Plano as MongoDB Plano do Aluno
+    participant ServUsuario as "Serviço do Usuário"
+    participant ServSimulado as "Serviço do Simulado"
+    participant ServModelo as "Serviço do Modelo"
+    participant ServQuestoes as "Serviço de Questões"
+    participant LLM as "Serviço de Terceiro LLM"
+    participant MDB_Simulado as "MongoDB Simulado"
+    participant MDB_Plano as "MongoDB Plano do Aluno"
 
     %% ====== Fluxo de Acesso e Autenticação ======
     Actor ->> Site: Acessa sistema
@@ -40,4 +40,3 @@ sequenceDiagram
     ServQuestoes ->> MDB_Simulado: Atualizar questões respondidas
     ServSimulado ->> MDB_Simulado: Atualizar simulado
     ServSimulado -->> Site: Retorna Simulado Finalizado
-```
