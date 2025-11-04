@@ -40,3 +40,4 @@ sequenceDiagram
     ServQuestoes --> MDB_Simulado: Atualizar questões respondidas
     ServSimulado --> MDB_Simulado: Atualizar simulado
     ServSimulado ---> Site: Retorna Simulado Finalizado
+```
